@@ -1,0 +1,8 @@
+# Backups grandes - subir manualmente a Google Drive, Dropbox, etc.
+backups/*.tar.gz
+backups/*.gz
+
+# Archivos temporales
+*.log
+.DS_Store
+

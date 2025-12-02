@@ -1,0 +1,50 @@
+version: "3.8"
+
+name: freepbx-zoiper
+
+services:
+  freepbx:
+    image: tiredofit/freepbx
+    container_name: freepbx
+    ports:
+      - "80:80" # HTTP - Interfaz web
+      - "443:443" # HTTPS - Interfaz web segura
+      - "5060:5060/udp" # SIP UDP
+      - "5060:5060/tcp" # SIP TCP
+      - "5160:5160/udp" # PJSIP UDP
+      - "5160:5160/tcp" # PJSIP TCP
+      - "18000-18100:18000-18100/udp" # RTP - Puertos de audio
+    volumes:
+      - freepbx_data:/data
+      - freepbx_logs:/var/log
+      - freepbx_www:/var/www/html
+      - freepbx_db:/var/lib/mysql
+    environment:
+      # Configuración de base de datos embebida
+      - DB_EMBEDDED=TRUE
+
+      # Configuración RTP para audio
+      - RTP_START=18000
+      - RTP_FINISH=18100
+
+      # Zona horaria
+      - TIMEZONE=America/Mexico_City
+
+      # Habilitar UCP (User Control Panel)
+      - UCP_FIRST=TRUE
+
+      # Habilitar fail2ban para seguridad
+      - ENABLE_FAIL2BAN=FALSE
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/admin"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  freepbx_data:
+  freepbx_logs:
+  freepbx_www:
+  freepbx_db:
