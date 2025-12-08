@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 
 name: freepbx-zoiper
 
@@ -6,6 +6,7 @@ services:
   freepbx:
     image: tiredofit/freepbx
     container_name: freepbx
+    network_mode: host
     ports:
       - "80:80" # HTTP - Interfaz web
       - "443:443" # HTTPS - Interfaz web segura
