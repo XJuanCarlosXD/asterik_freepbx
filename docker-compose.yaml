@@ -1,5 +1,3 @@
-version: "3.3"
-
 name: freepbx-zoiper
 
 services:
@@ -16,10 +14,10 @@ services:
       - "5160:5160/tcp" # PJSIP TCP
       - "18000-18100:18000-18100/udp" # RTP - Puertos de audio
     volumes:
-      - freepbx_data:/data
-      - freepbx_logs:/var/log
-      - freepbx_www:/var/www/html
-      - freepbx_db:/var/lib/mysql
+      - ./config/freepbx:/data
+      - ./config/logs:/var/log
+      - ./config/www:/var/www/html
+      - ./config/mysql:/var/lib/mysql
     environment:
       # Configuración de base de datos embebida
       - DB_EMBEDDED=TRUE
@@ -44,8 +42,3 @@ services:
       retries: 5
       start_period: 300s
 
-volumes:
-  freepbx_data:
-  freepbx_logs:
-  freepbx_www:
-  freepbx_db:

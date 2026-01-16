@@ -6,3 +6,7 @@ backups/*.gz
 *.log
 .DS_Store
 
+config/freepbx/
+config/logs/
+config/mysql/
+config/www/
